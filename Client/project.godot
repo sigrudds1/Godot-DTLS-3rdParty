@@ -8,9 +8,32 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "FileHandler",
+"language": "GDScript",
+"path": "res://Scripts/Classes/cFileHandler.gd"
+}, {
+"base": "Reference",
+"class": "Net",
+"language": "GDScript",
+"path": "res://Scripts/Classes/cNet.gd"
+}, {
+"base": "Reference",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://Scripts/Classes/cUtils.gd"
+} ]
+_global_script_class_icons={
+"FileHandler": "",
+"Net": "",
+"Utils": ""
+}
+
 [application]
 
 config/name="DTLS 3rd Party SSL Client"
+run/main_scene="res://Client.tscn"
 config/icon="res://icon.png"
 
 [physics]
