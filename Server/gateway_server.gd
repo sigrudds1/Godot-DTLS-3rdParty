@@ -5,6 +5,7 @@ const kMaxConns:int = 10
 var ssl_key_m:CryptoKey
 var ssl_cert_m:X509Certificate
 var ssl_chain_m:X509Certificate
+var ssl_fullchain_m:X509Certificate
 var tcp_server_m:TCP_Server setget _noset
 var tcp_peer_threads_m:Array = [] setget _noset
 var thr_arr_mutex_m := Mutex.new() setget _noset
@@ -72,10 +73,10 @@ func m_load_config() -> void:
 #	ssl_cert_m = load(Glb.plyr_ssl_cert_path)
 #	ssl_key_m = load(Glb.plyr_ssl_key_path)
 	
+#	ssl_cert_m = load("res://x509Cert/cert1.crt")
 	ssl_key_m = load("res://x509Cert/privkey1.key")
-	ssl_cert_m = load("res://x509Cert/cert1.crt")
-#	ssl_chain_m = load("res://x509Cert/chain1.crt")
-	ssl_chain_m = load("res://x509Cert/fullchain1.crt")
+	ssl_chain_m = load("res://x509Cert/chain1.crt")
+	ssl_fullchain_m = load("res://x509Cert/fullchain1.crt")
 
 
 func m_peer_send(ssl_peer:StreamPeerSSL, data:Dictionary) -> void:
@@ -88,16 +89,14 @@ func m_peer_send(ssl_peer:StreamPeerSSL, data:Dictionary) -> void:
 
 func m_peer_thread(data:Dictionary) -> void:
 	print("tcp_peer_threads_m:", tcp_peer_threads_m)
-#	print("passed id:", data.inst_id)
-#	print("self.id:", self.get_instance_id())
-#	print(typeof(self))
 	var tcp_peer:StreamPeerTCP = data.tcp_peer
 	var tcp_host:String = tcp_peer.get_connected_host()
 	var err:int = OK
 	var svr_timeout:int = Glb.plyr_conn_timeout
 	var ssl_peer := StreamPeerSSL.new()
 	
-	err = ssl_peer.accept_stream(tcp_peer, ssl_key_m, ssl_cert_m, ssl_chain_m)
+#	err = ssl_peer.accept_stream(tcp_peer, ssl_key_m, ssl_cert_m) 
+	err = ssl_peer.accept_stream(tcp_peer, ssl_key_m, ssl_fullchain_m, ssl_chain_m)
 	if err:
 		print("m_peer_thread - SSL accept stream err code:" + str(err) + 
 				" from host:" + tcp_host)
