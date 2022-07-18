@@ -15,6 +15,7 @@ data_*/
 #Certificates
 *.crt
 *.key
+*.pem
 
 #Instance specific files 
 server_cfg.json
