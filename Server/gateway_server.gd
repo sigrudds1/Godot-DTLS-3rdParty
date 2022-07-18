@@ -1,12 +1,10 @@
 extends Node
 
-#TODO (Production) Write Errors to to error log
-#TODO (Pre-Release) Setup cross gateway player transfer
-
 const kMaxConns:int = 10
 
 var ssl_key_m:CryptoKey
 var ssl_cert_m:X509Certificate
+var ssl_chain_m:X509Certificate
 var tcp_server_m:TCP_Server setget _noset
 var tcp_peer_threads_m:Array = [] setget _noset
 var thr_arr_mutex_m := Mutex.new() setget _noset
@@ -71,8 +69,13 @@ func _process(_delta) -> void:
 
 ##################  private members ######################################
 func m_load_config() -> void:
-	ssl_cert_m = load(Glb.plyr_ssl_cert_path)
-	ssl_key_m = load(Glb.plyr_ssl_key_path)
+#	ssl_cert_m = load(Glb.plyr_ssl_cert_path)
+#	ssl_key_m = load(Glb.plyr_ssl_key_path)
+	
+	ssl_key_m = load("res://x509Cert/privkey1.key")
+	ssl_cert_m = load("res://x509Cert/cert1.crt")
+#	ssl_chain_m = load("res://x509Cert/chain1.crt")
+	ssl_chain_m = load("res://x509Cert/fullchain1.crt")
 
 
 func m_peer_send(ssl_peer:StreamPeerSSL, data:Dictionary) -> void:
@@ -94,7 +97,7 @@ func m_peer_thread(data:Dictionary) -> void:
 	var svr_timeout:int = Glb.plyr_conn_timeout
 	var ssl_peer := StreamPeerSSL.new()
 	
-	err = ssl_peer.accept_stream(tcp_peer, ssl_key_m, ssl_cert_m)
+	err = ssl_peer.accept_stream(tcp_peer, ssl_key_m, ssl_cert_m, ssl_chain_m)
 	if err:
 		print("m_peer_thread - SSL accept stream err code:" + str(err) + 
 				" from host:" + tcp_host)
