@@ -1,10 +1,10 @@
 extends Node
 
-#var url:String = "192.168.1.230"
-var url:String = "www.stopclock.app"
+var url:String = "godot.hopto.org"
+#var url:String = "www.stopclock.app"
 #var url:String = "stopclock.app"
-#var port:int = 8888
-var port:int = 42092
+var port:int = 9999
+#var port:int = 42092
 var tcp_peer:StreamPeerTCP
 var ssl_peer:StreamPeerSSL
 
@@ -18,8 +18,9 @@ func _ready() -> void:
 		print("tcp connected")
 		
 	ssl_peer = StreamPeerSSL.new()
-#	err = ssl_peer.connect_to_stream(tcp_peer) #will fetch cert from server
-	err = ssl_peer.connect_to_stream(tcp_peer, true, url) #will fetch cert from server and check the url validity
+	err = ssl_peer.connect_to_stream(tcp_peer) #will fetch cert from server
+#	var cert:X509Certificate = load("res://x509/cert1.crt")
+#	err = ssl_peer.connect_to_stream(tcp_peer, true, url, cert) #check the url validity
 	if err:
 		print_debug("ssl connection error:", err)
 	else:
@@ -28,5 +29,6 @@ func _ready() -> void:
 			print("connected")
 		else:
 			print("connection failed")
+	
 	
 
