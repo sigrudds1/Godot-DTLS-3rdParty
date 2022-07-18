@@ -18,9 +18,12 @@ func _ready() -> void:
 		print("tcp connected")
 		
 	ssl_peer = StreamPeerSSL.new()
-	err = ssl_peer.connect_to_stream(tcp_peer) #will fetch cert from server
-#	var cert:X509Certificate = load("res://x509/cert1.crt")
-#	err = ssl_peer.connect_to_stream(tcp_peer, true, url, cert) #check the url validity
+#	err = ssl_peer.connect_to_stream(tcp_peer) #will fetch cert from server
+	
+	var cert:X509Certificate = load("res://x509/cert1.crt")
+#	err = ssl_peer.connect_to_stream(tcp_peer) #don't verify
+	err = ssl_peer.connect_to_stream(tcp_peer, true, url) #verify domain name
+#	err = ssl_peer.connect_to_stream(tcp_peer, true, url, cert) #use the domain and cert for validity
 	if err:
 		print_debug("ssl connection error:", err)
 	else:
