@@ -3,7 +3,7 @@ extends Node
 var is_ready:bool = false
 
 var plyr_conn_timeout:int = 2000
-var plyr_listen_port:int = 8888
+var plyr_listen_port:int = 9999
 var plyr_max_conns:int = 1000
 var plyr_ssl_key_path:String = ""
 var plyr_ssl_cert_path:String = ""
@@ -19,8 +19,12 @@ func _ready() -> void:
 		exe_dir = OS.get_executable_path().get_base_dir() + "/"
 		
 	#IMPORTANT - Make sure the path exist where the server exec is ran standalone
-	plyr_ssl_key_path = exe_dir + "x509Cert/test.key"
-	plyr_ssl_cert_path = exe_dir + "x509Cert/test.crt"
+#	plyr_ssl_key_path = exe_dir + "x509Cert/test.key"
+#	plyr_ssl_cert_path = exe_dir + "x509Cert/test.crt"
+	plyr_ssl_key_path = exe_dir + "x509Cert/test_key.key"
+	plyr_ssl_cert_path = exe_dir + "x509Cert/test_crt.crt"
+#	plyr_ssl_key_path = exe_dir + "x509Cert/test_key.pem"
+#	plyr_ssl_cert_path = exe_dir + "x509Cert/test_crt.pem"
 	
 #	#Not used for SSL Testing
 #	var path:String = exe_dir + "Export/server_cfg.json"
