@@ -19,10 +19,10 @@ func _ready() -> void:
 		exe_dir = OS.get_executable_path().get_base_dir() + "/"
 		
 	#IMPORTANT - Make sure the path exist where the server exec is ran standalone
-#	plyr_ssl_key_path = exe_dir + "x509Cert/test.key"
-#	plyr_ssl_cert_path = exe_dir + "x509Cert/test.crt"
-	plyr_ssl_key_path = exe_dir + "x509Cert/test_key.key"
-	plyr_ssl_cert_path = exe_dir + "x509Cert/test_crt.crt"
+	plyr_ssl_key_path = exe_dir + "x509Cert/test.key"
+	plyr_ssl_cert_path = exe_dir + "x509Cert/test.crt"
+#	plyr_ssl_key_path = exe_dir + "x509Cert/test_key.key"
+#	plyr_ssl_cert_path = exe_dir + "x509Cert/test_crt.crt"
 #	plyr_ssl_key_path = exe_dir + "x509Cert/test_key.pem"
 #	plyr_ssl_cert_path = exe_dir + "x509Cert/test_crt.pem"
 	
